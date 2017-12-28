@@ -5,6 +5,7 @@
   "repository": "https://github.com/JosephJvB/testplate.git",
   "main": "server/index.js",
   "scripts": {
+    "read": "node server/readLine/readWrite",
     "spook": "node server/spook/spook",
     "start": "webpack && node server",
     "dev": "nodemon --watch server & webpack --watch",

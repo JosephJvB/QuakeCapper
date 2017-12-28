@@ -2,7 +2,7 @@ const Nightmare = require('nightmare')
 const nightmare = Nightmare({ show: true })
 
 nightmare
-  .goto('https://www.twitch.tv/ayoitsjoevanbo')
+  .goto('https://www.twitch.tv/kevin_force')
   .then(() => {
     return nightmare
       .wait(5500)
@@ -11,7 +11,10 @@ nightmare
   .then(() => {
     console.log('nightmare', nightmare.state)
     nightmare.end()
-      .then(res => {
+      .then(() => {
         console.log('done')
       })
   })
+
+  // so next I want to attach a read/write file to keep track of my screenshots, to know what level is what
+// also want to attach a readline functionality so I can just press a button to take the screenshot rather than enter the script every time.. I think that would be cool. press spacebar - readfile, screenshot, writefile. nice
