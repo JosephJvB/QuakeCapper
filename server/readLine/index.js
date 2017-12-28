@@ -1,4 +1,8 @@
 const readline = require('readline')
+const rw = require('./readWrite')
+
+// rw.newRun()
+// rw.logTime()
 
 begin()
 

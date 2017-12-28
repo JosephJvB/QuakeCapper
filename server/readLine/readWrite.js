@@ -1,11 +1,15 @@
 const fs = require('fs')
 const path = require('path')
 
+// newRun(999)
+
 function newRun (num) {
-  fs.readFile(path.join(__dirname, 'recordTemplate.json'), 'utf8', (err, data) => {
+  let templatePath = path.join(__dirname, 'recordTemplate.json')
+  let newRecord = `${__dirname}/../records/testrun${num}.json`
+  fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
-      fs.writeFile(`${__dirname}/../records/testrun${num}.json`, data, err => {
+      fs.writeFile(newRecord, data, err => {
         if (err) console.log(err)
         else console.log('Good luck!')
       })
@@ -13,15 +17,16 @@ function newRun (num) {
   })
 }
 
-logTime('../records/testrun6.json', 'E2', 'M1', 9)
+// logTime(999, 'E4', 'M1', 29)
 
-function logTime (path, e, m, time) {
-  fs.readFile(`${__dirname}/${path}`, 'utf8', (err, data) => {
+function logTime (num, e, m, time) {
+  let recordPath = `${__dirname}/../records/testrun${num}.json`
+  fs.readFile(recordPath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
       let newTime = JSON.parse(data)
       newTime[e][m] = time
-      fs.writeFile(`${__dirname}/${path}`, JSON.stringify(newTime), err => {
+      fs.writeFile(recordPath, JSON.stringify(newTime), err => {
         if (err) console.log(err)
         else console.log(newTime)
       })
@@ -29,4 +34,4 @@ function logTime (path, e, m, time) {
   })
 }
 
-module.exports = { newRun }
+module.exports = { newRun, logTime }
