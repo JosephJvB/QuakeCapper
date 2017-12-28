@@ -5,6 +5,7 @@
   "repository": "https://github.com/JosephJvB/testplate.git",
   "main": "server/index.js",
   "scripts": {
+    "spook": "node server/spook/spook",
     "start": "webpack && node server",
     "dev": "nodemon --watch server & webpack --watch",
     "test": "tape -r babel-register 'test/**/*.test.js' | tap-diff"
@@ -19,6 +20,9 @@
   "license": "ISC",
   "devDependencies": {
     "enzyme": "^2.7.0",
+    "nightmare": "^2.10.0",
+    "puppeteer": "^0.13.0",
+    "puppeteer-renderer-middleware": "^0.2.3",
     "tap-diff": "^0.1.1",
     "tape": "^4.6.3"
   },
