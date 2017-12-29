@@ -6,6 +6,7 @@
   "main": "server/index.js",
   "scripts": {
     "read": "node server/readLine/readWrite",
+    "run": "node server/readLine",
     "spook": "node server/spook/spook",
     "start": "webpack && node server",
     "dev": "nodemon --watch server & webpack --watch",
