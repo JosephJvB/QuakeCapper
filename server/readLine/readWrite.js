@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const { condish } = require('./yuckers')
+const { findNext } = require('./yuckers')
 
 // newRun(5)
 
@@ -50,17 +50,24 @@ function logTime (e, m, time) {
   })
 }
 
-function nextMap (num) {
-  let recordPath = `${__dirname}/../records/testrun${num}.json`
-  fs.readFile(recordPath, 'utf8', (err, data) => {
+function nextMap () {
+  let templatePath = path.join(__dirname, 'recordTemplate.json')
+  fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
-      let recordObj = JSON.parse(data)
-      condish(recordObj)
+      let temp = JSON.parse(data)
+      let num = temp.currentRun
+      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      fs.readFile(recordPath, 'utf8', (err, data) => {
+        if (err) console.log(err)
+        else {
+          let recordObj = JSON.parse(data)
+          findNext(recordObj, 1)
+        }
+      })
     }
   })
 }
-
-// nextMap(6)
+// nextMap()
 
 module.exports = { newRun, logTime, nextMap }

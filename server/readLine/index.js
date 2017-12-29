@@ -16,16 +16,16 @@ function create () {
 function begin () {
   console.log('')
   const rl = create()
-  console.log('what number run?')
+  console.log('Please enter runID')
   rl.prompt()
   rl.on('line', (input) => {
     console.log('starting run', input)
     rw.newRun(input)
-    setTimeout(() => rw.nextMap(input), 1000)
+    setTimeout(rw.nextMap, 1000)
     rl.prompt()
   })
-  rl.on('line', (input) => {
-    rw.logTime('E2', 'M1', input)
-    rl.close()
-  })
+  // rl.on('line', (input) => {
+  //   // rw.logTime('E2', 'M1', input)
+  //   rl.close()
+  // })
 }

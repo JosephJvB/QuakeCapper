@@ -1,26 +1,37 @@
-function condish (data) {
-  let e1Arr = Object.values(data.E1)
-  let next = e1Arr.indexOf(null) + 1
-  if (next !== 0) return console.log(`next map is E1.M${next}`)
-  if (next === 0) {
-    let e2Arr = Object.values(data.E2)
-    let next = e2Arr.indexOf(null) + 1
-    if (next !== 0) return console.log(`next map is E2.M${next}`)
-    if (next === 0) {
-      let e3Arr = Object.values(data.E3)
-      let next = e3Arr.indexOf(null) + 1
-      if (next !== 0) return console.log(`next map is E3.M${next}`)
-      if (next === 0) {
-        let e4Arr = Object.values(data.E4)
-        let next = e4Arr.indexOf(null) + 1
-        if (next !== 0) return console.log(`next map is E4.M${next}`)
-        else return console.log('GG!')
-      }
-    }
-  }
+function findNext (data, idx) {
+  if (idx === 5) return console.log('gg')
+  let eArr = Object.values(data)
+  let ep = eArr[idx]
+  let mArr = Object.values(ep)
+  let next = mArr.indexOf(null) + 1
+  // console.log(next)
+  if (next !== 0) return console.log(`next map is E${idx}.M${next}`)
+  else findNext(data, idx + 1)
 }
 
-module.exports = { condish }
+module.exports = { findNext }
+
+// function bigCondish(data) {
+//   let e1Arr = Object.values(data.E1)
+//   let next = e1Arr.indexOf(null) + 1
+//   if (next !== 0) return console.log(`next map is E1.M${next}`)
+//   if (next === 0) {
+//     let e2Arr = Object.values(data.E2)
+//     let next = e2Arr.indexOf(null) + 1
+//     if (next !== 0) return console.log(`next map is E2.M${next}`)
+//     if (next === 0) {
+//       let e3Arr = Object.values(data.E3)
+//       let next = e3Arr.indexOf(null) + 1
+//       if (next !== 0) return console.log(`next map is E3.M${next}`)
+//       if (next === 0) {
+//         let e4Arr = Object.values(data.E4)
+//         let next = e4Arr.indexOf(null) + 1
+//         if (next !== 0) return console.log(`next map is E4.M${next}`)
+//         else return console.log('GG!')
+//       }
+//     }
+//   }
+// }
 
 // function nextMap (num) {
 //   let recordPath = `${__dirname}/../records/testrun${num}.json`
