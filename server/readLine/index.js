@@ -21,7 +21,11 @@ function begin () {
   rl.on('line', (input) => {
     console.log('starting run', input)
     rw.newRun(input)
-    rw.nextMap(input)
+    setTimeout(() => rw.nextMap(input), 1000)
+    rl.prompt()
+  })
+  rl.on('line', (input) => {
+    rw.logTime('E2', 'M1', input)
     rl.close()
   })
 }

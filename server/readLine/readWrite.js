@@ -12,28 +12,39 @@ function newRun (num) {
     if (err) console.log(err)
     else {
       let run = JSON.parse(data)
-      run.number = num
+      run.currentRun = num
       fs.writeFile(newRecord, JSON.stringify(run), err => {
         if (err) console.log(err)
         else console.log('Good luck!')
+      })
+      fs.writeFile(templatePath, JSON.stringify(run), err => {
+        if (err) console.log(err)
       })
     }
   })
 }
 
-// setTimeout(() => logTime(30, 'E4', 'M1', 'loads'), 3000)
+// logTime('E4', 'M1', 'loads')
 
-function logTime (num, e, m, time) {
-  let recordPath = `${__dirname}/../records/testrun${num}.json`
-  fs.readFile(recordPath, 'utf8', (err, data) => {
+function logTime (e, m, time) {
+  let templatePath = path.join(__dirname, 'recordTemplate.json')
+  fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
-      let newTime = JSON.parse(data)
-      newTime[e][m] = time
-      newTime.total.push(time)
-      fs.writeFile(recordPath, JSON.stringify(newTime), err => {
+      let temp = JSON.parse(data)
+      let num = temp.currentRun
+      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
-        else console.log(newTime)
+        else {
+          let newTime = JSON.parse(data)
+          newTime[e][m] = time
+          newTime.total.push(time)
+          fs.writeFile(recordPath, JSON.stringify(newTime), err => {
+            if (err) console.log(err)
+            else console.log(newTime[e])
+          })
+        }
       })
     }
   })
@@ -49,5 +60,7 @@ function nextMap (num) {
     }
   })
 }
+
+// nextMap(6)
 
 module.exports = { newRun, logTime, nextMap }

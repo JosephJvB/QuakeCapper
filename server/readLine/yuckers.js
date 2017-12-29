@@ -14,7 +14,7 @@ function condish (data) {
         let e4Arr = Object.values(data.E4)
         let next = e4Arr.indexOf(null) + 1
         if (next !== 0) return console.log(`next map is E4.M${next}`)
-        else return 'GG!'
+        else return console.log('GG!')
       }
     }
   }
