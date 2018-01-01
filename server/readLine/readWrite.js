@@ -1,12 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 
-const { findNext } = require('./yuckers')
+const { findNext, getRunNum } = require('./yuckers')
+
+const templatePath = path.join(__dirname, 'recordTemplate.json')
 
 // newRun(5)
 
 function newRun (num) {
-  let templatePath = path.join(__dirname, 'recordTemplate.json')
   let newRecord = `${__dirname}/../records/testrun${num}.json`
   fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
@@ -15,7 +16,6 @@ function newRun (num) {
       run.currentRun = num
       fs.writeFile(newRecord, JSON.stringify(run), err => {
         if (err) console.log(err)
-        else console.log('Good luck!')
       })
       fs.writeFile(templatePath, JSON.stringify(run), err => {
         if (err) console.log(err)
@@ -24,10 +24,10 @@ function newRun (num) {
   })
 }
 
-// logTime('E4', 'M1', 'loads')
+// logTime('E4', 'M1', 44)
+// console.log(getRunNum())
 
 function logTime (e, m, time) {
-  let templatePath = path.join(__dirname, 'recordTemplate.json')
   fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
@@ -42,7 +42,7 @@ function logTime (e, m, time) {
           newTime.total.push(time)
           fs.writeFile(recordPath, JSON.stringify(newTime), err => {
             if (err) console.log(err)
-            else console.log(newTime[e])
+            else console.log(`${e}.${m}:`, time)
           })
         }
       })
@@ -51,7 +51,6 @@ function logTime (e, m, time) {
 }
 
 function nextMap () {
-  let templatePath = path.join(__dirname, 'recordTemplate.json')
   fs.readFile(templatePath, 'utf8', (err, data) => {
     if (err) console.log(err)
     else {
@@ -62,12 +61,12 @@ function nextMap () {
         if (err) console.log(err)
         else {
           let recordObj = JSON.parse(data)
-          findNext(recordObj, 1)
+          return findNext(recordObj, 1)
         }
       })
     }
   })
 }
-// nextMap()
+// console.log('next:', nextMap())
 
 module.exports = { newRun, logTime, nextMap }

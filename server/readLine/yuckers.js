@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 function findNext (data, idx) {
   if (idx === 5) return console.log('gg')
   let eArr = Object.values(data)
@@ -5,11 +8,23 @@ function findNext (data, idx) {
   let mArr = Object.values(ep)
   let next = mArr.indexOf(null) + 1
   // console.log(next)
-  if (next !== 0) return console.log(`next map is E${idx}.M${next}`)
-  else findNext(data, idx + 1)
+  if (next !== 0) {
+    console.log(`next map is E${idx}.M${next}`)
+    return `E${idx}.M${next}`
+  } else findNext(data, idx + 1)
 }
 
-module.exports = { findNext }
+const getRunNum = () => {
+  fs.readFile(path.join(__dirname, 'recordTemplate.json'), 'utf8', (err, data) => {
+    if (err) console.log(err)
+    else {
+      let run = JSON.parse(data)
+      return run.currentRun
+    }
+  })
+}
+
+module.exports = { findNext, getRunNum }
 
 // function bigCondish(data) {
 //   let e1Arr = Object.values(data.E1)
