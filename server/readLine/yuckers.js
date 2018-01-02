@@ -1,14 +1,11 @@
 // const fs = require('fs')
 // const path = require('path')
 
-function findNext (data, idx) {
-  if (idx === 5) return console.log('gg')
-  let eArr = Object.values(data)
-  let ep = eArr[idx - 1]
-  let mArr = Object.values(ep)
-  let next = mArr.indexOf(null) + 1
-  if (next !== 0) return `E${idx}.M${next}`
-  else findNext(data, idx + 1)
+function findNextMap (data, idx) {
+  if (idx === 26) return
+  let next = data.times.findIndex(m => m.time === null)
+  if (next >= 0) return data.times[next].mapName
+  else return 'gg'
 }
 
 // const getRunNum = () => {
@@ -21,7 +18,7 @@ function findNext (data, idx) {
 //   })
 // }
 
-module.exports = { findNext }
+module.exports = { findNextMap }
 
 // function bigCondish(data) {
 //   let e1Arr = Object.values(data.E1)

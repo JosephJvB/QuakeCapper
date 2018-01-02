@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const { findNext } = require('./yuckers')
+const { findNextMap } = require('./yuckers')
 
 const templatePath = path.join(__dirname, 'recordTemplate.json')
 const recordDir = `${__dirname}/../records`
@@ -31,7 +31,7 @@ function newRun () {
 
 // logTime(44)
 
-function logTime (time) {
+function logTime (newTime) {
   fs.readdir(recordDir, 'utf8', (err, files) => {
     if (err) console.log(err)
     else {
@@ -40,12 +40,12 @@ function logTime (time) {
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
-          let newTime = JSON.parse(data)
-          let e = newTime.pendingMap.split('.')[0]
-          let m = newTime.pendingMap.split('.')[1]
-          newTime[e][m] = time
-          newTime.total.push(time)
-          fs.writeFile(recordPath, JSON.stringify(newTime), err => {
+          let recordObj = JSON.parse(data)
+          let mName = findNextMap(recordObj, 0)
+          let idx = recordObj.times.findIndex(o => o.mapName === mName)
+          recordObj.times[idx].time = newTime
+          recordObj.total.push(newTime)
+          fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
             if (err) console.log(err)
           })
         }
@@ -64,11 +64,8 @@ function nextMap () {
         if (err) console.log(err)
         else {
           let recordObj = JSON.parse(data)
-          let e = 1
-          if (recordObj.pendingMap) e = Number(recordObj.pendingMap.split('.')[0][1])
-          let n = findNext(recordObj, e)
-          if (!n) n = findNext(recordObj, e + 1)
-          recordObj.pendingMap = n
+          let n = findNextMap(recordObj, 0)
+          if (n === 'gg') return console.log('she\'s done mate')
           console.log(`next map is: ${n}`)
           fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
             if (err) console.log(err)
@@ -80,4 +77,26 @@ function nextMap () {
 }
 // nextMap()
 
-module.exports = { newRun, logTime, nextMap }
+function calcTotal () {
+  fs.readdir(recordDir, 'utf8', (err, files) => {
+    if (err) console.log(err)
+    else {
+      let num = files.length
+      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      fs.readFile(recordPath, 'utf8', (err, data) => {
+        if (err) console.log(err)
+        else {
+          let recordObj = JSON.parse(data)
+          let tot = recordObj.total.reduce((a, c) => a + c)
+          recordObj.final = tot
+          console.log(`your final time was ${tot} .seconds`)
+          fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
+            if (err) console.log(err)
+          })
+        }
+      })
+    }
+  })
+}
+
+module.exports = { newRun, logTime, nextMap, calcTotal }

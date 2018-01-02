@@ -31,6 +31,10 @@ function time () {
   const rl = create()
   rl.prompt()
   rl.on('line', input => {
+    if (input === 'done') {
+      rw.calcTotal()
+      rl.close()
+    }
     rl.close()
     rw.logTime(Number(input))
     setTimeout(mapAndTime, 1000)
