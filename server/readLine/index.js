@@ -32,7 +32,7 @@ function time () {
   rl.prompt()
   rl.on('line', input => {
     rl.close()
-    rw.logTime(input)
+    rw.logTime(Number(input))
     setTimeout(mapAndTime, 1000)
   })
 }
