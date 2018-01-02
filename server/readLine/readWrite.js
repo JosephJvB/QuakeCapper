@@ -64,9 +64,11 @@ function nextMap () {
         if (err) console.log(err)
         else {
           let recordObj = JSON.parse(data)
-          let n = findNext(recordObj, 1)
+          let e = 1
+          if (recordObj.pendingMap) e = Number(recordObj.pendingMap.split('.')[0][1])
+          let n = findNext(recordObj, e)
+          if (!n) n = findNext(recordObj, e + 1)
           recordObj.pendingMap = n
-          if (!n) return
           console.log(`next map is: ${n}`)
           fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
             if (err) console.log(err)
