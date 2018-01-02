@@ -1,48 +1,52 @@
 const fs = require('fs')
 const path = require('path')
 
-const { findNext, getRunNum } = require('./yuckers')
+const { findNext } = require('./yuckers')
 
 const templatePath = path.join(__dirname, 'recordTemplate.json')
+const recordDir = `${__dirname}/../records`
 
-// newRun(5)
+// newRun()
 
-function newRun (num) {
-  let newRecord = `${__dirname}/../records/testrun${num}.json`
-  fs.readFile(templatePath, 'utf8', (err, data) => {
+function newRun () {
+  fs.readdir(recordDir, (err, files) => {
     if (err) console.log(err)
     else {
-      let run = JSON.parse(data)
-      run.currentRun = num
-      fs.writeFile(newRecord, JSON.stringify(run), err => {
+      let num = 1
+      if (files.length) num = files.length + 1
+      let newRecord = `${__dirname}/../records/testrun${num}.json`
+      fs.readFile(templatePath, 'utf8', (err, data) => {
         if (err) console.log(err)
-      })
-      fs.writeFile(templatePath, JSON.stringify(run), err => {
-        if (err) console.log(err)
+        else {
+          let run = JSON.parse(data)
+          fs.writeFile(newRecord, JSON.stringify(run), err => {
+            if (err) console.log(err)
+            else console.log('starting run no. ' + num)
+          })
+        }
       })
     }
   })
 }
 
-// logTime('E4', 'M1', 44)
-// console.log(getRunNum())
+// logTime(44)
 
-function logTime (e, m, time) {
-  fs.readFile(templatePath, 'utf8', (err, data) => {
+function logTime (time) {
+  fs.readdir(recordDir, 'utf8', (err, files) => {
     if (err) console.log(err)
     else {
-      let temp = JSON.parse(data)
-      let num = temp.currentRun
+      let num = files.length
       let recordPath = `${__dirname}/../records/testrun${num}.json`
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
           let newTime = JSON.parse(data)
+          let e = newTime.pendingMap.split('.')[0]
+          let m = newTime.pendingMap.split('.')[1]
           newTime[e][m] = time
           newTime.total.push(time)
           fs.writeFile(recordPath, JSON.stringify(newTime), err => {
             if (err) console.log(err)
-            else console.log(`${e}.${m}:`, time)
           })
         }
       })
@@ -51,22 +55,27 @@ function logTime (e, m, time) {
 }
 
 function nextMap () {
-  fs.readFile(templatePath, 'utf8', (err, data) => {
+  fs.readdir(recordDir, 'utf8', (err, files) => {
     if (err) console.log(err)
     else {
-      let temp = JSON.parse(data)
-      let num = temp.currentRun
+      let num = files.length
       let recordPath = `${__dirname}/../records/testrun${num}.json`
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
           let recordObj = JSON.parse(data)
-          return findNext(recordObj, 1)
+          let n = findNext(recordObj, 1)
+          recordObj.pendingMap = n
+          if (!n) return
+          console.log(`next map is: ${n}`)
+          fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
+            if (err) console.log(err)
+          })
         }
       })
     }
   })
 }
-// console.log('next:', nextMap())
+// nextMap()
 
 module.exports = { newRun, logTime, nextMap }

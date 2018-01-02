@@ -15,32 +15,22 @@ function create () {
 
 function begin () {
   console.log('')
+  console.log('***')
+  rw.newRun()
+  setTimeout(rw.nextMap, 500)
+  setTimeout(() => console.log('***'), 510)
+  setTimeout(addTime, 1000)
+}
+
+function addTime () {
+  console.log('')
+  console.log('please enter map time:')
   const rl = create()
-  console.log('Please enter runID')
   rl.prompt()
-  rl.on('line', (input) => {
-    console.log('starting run', input)
-    rw.newRun(input)
-    setTimeout(next, 500)
+  rl.on('line', input => {
     rl.close()
+    rw.logTime(input)
+    setTimeout(rw.nextMap, 1000)
+    setTimeout(addTime)
   })
 }
-
-function next () {
-  rw.nextMap()
-    .then(res => {
-      const e = res.split('.')[0]
-      const m = res.split('.')[1]
-      console.log('')
-      const rl = create()
-      rl.prompt()
-      setTimeout(() => rl.question('how long did you last?', input => {
-        rl.close()
-        console.log(input)
-        rw.logTime(e, m, input)
-      }), 2000)
-    })
-}
-
-// const e = res.split('.')[0]
-// const m = epMap.split('.')[1]
