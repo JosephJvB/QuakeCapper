@@ -14,7 +14,7 @@ function newRun () {
     else {
       let num = 1
       if (files.length) num = files.length + 1
-      let newRecord = `${__dirname}/../records/testrun${num}.json`
+      let newRecord = `${__dirname}/../records/run_${num}_.json`
       fs.readFile(templatePath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
@@ -36,7 +36,7 @@ function logTime (newTime) {
     if (err) console.log(err)
     else {
       let num = files.length
-      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      let recordPath = `${__dirname}/../records/run_${num}_.json`
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
@@ -59,7 +59,7 @@ function nextMap () {
     if (err) console.log(err)
     else {
       let num = files.length
-      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      let recordPath = `${__dirname}/../records/run_${num}_.json`
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
@@ -77,14 +77,14 @@ function nextMap () {
 }
 // nextMap()
 
-calcTotal()
+// calcTotal()
 
 function calcTotal () {
   fs.readdir(recordDir, 'utf8', (err, files) => {
     if (err) console.log(err)
     else {
       let num = files.length
-      let recordPath = `${__dirname}/../records/testrun${num}.json`
+      let recordPath = `${__dirname}/../records/run_${num}_.json`
       fs.readFile(recordPath, 'utf8', (err, data) => {
         if (err) console.log(err)
         else {
