@@ -33,7 +33,7 @@ function time () {
   rl.on('line', input => {
     if (input === 'done') {
       rw.calcTotal()
-      rl.close()
+      return rl.close()
     }
     rl.close()
     rw.logTime(Number(input))

@@ -1,0 +1,32 @@
+I got a 891 seconds but my JSON got wiped cos of a bug lol.
+Lots of resets. Here's the txt, cbf recreating it:
+
+starting run no. 2
+ E1.M1: 28
+ E1.M2: 38
+ E1.M3: 52
+ E1.M4: 27
+ E1.M5: 23
+ E1.M6: 13
+ E1.M7: 16
+ E2.M1: 10
+ E2.M2: 44
+ E2.M3: 34
+ E2.M4: 58
+ E2.M5: 49
+ E2.M6: 87
+ E3.M1: 31
+ E3.M2: 22
+ E3.M3: 33
+ E3.M4: 55
+ E3.M5: 42
+ E3.M6: 29
+ E4.M1: 28
+ E4.M2: 38
+ E4.M3: 59
+ E4.M4: 30
+ E4.M5: 16
+ E4.M6: 33
+ E4.M7: 54
+ shubNiggurath: 33
+she's done mate
