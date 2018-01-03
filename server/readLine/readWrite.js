@@ -77,6 +77,8 @@ function nextMap () {
 }
 // nextMap()
 
+calcTotal()
+
 function calcTotal () {
   fs.readdir(recordDir, 'utf8', (err, files) => {
     if (err) console.log(err)
@@ -92,9 +94,9 @@ function calcTotal () {
           let mins = Number(minTot[0])
           let secs = Number(minTot[1].slice(0, 2))
           let final = `${mins}min ${secs}sec`
-          if (minTot[1] >= 60) final = `${mins + 1}min ${secs - 60}sec`
+          if (secs >= 60) final = `${mins + 1}min ${secs - 60}sec`
           recordObj.time = final
-          console.log(`your final time was ${tot} .seconds`)
+          console.log(`your final time was ${final}`)
           fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
             if (err) console.log(err)
           })
