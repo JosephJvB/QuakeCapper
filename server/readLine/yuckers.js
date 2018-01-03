@@ -69,3 +69,15 @@ module.exports = { findNextMap }
 // }
 
 // readTest()
+
+// function pracCalc(arr) {
+//   let tot = arr.reduce((a, c) => a + c)
+//   let minTot = (tot / 60).toString().split('.')
+//   let mins = Number(minTot[0])
+//   let secs = Number(minTot[1].slice(0, 2))
+//   let final = `${mins}min ${secs}sec`
+//   if (minTot[1] >= 60) final = `${mins + 1}min ${secs - 60}sec`
+//   console.log(final)
+// }
+
+// pracCalc([28, 38, 49, 26, 22, 15, 16, 10, 46, 30, 55, 48, 107, 31, 25, 35, 54, 42, 31, 28, 37, 55, 32, 17, 33, 53, 10, 33])

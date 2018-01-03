@@ -88,7 +88,12 @@ function calcTotal () {
         else {
           let recordObj = JSON.parse(data)
           let tot = recordObj.total.reduce((a, c) => a + c)
-          recordObj.final = tot
+          let minTot = (tot / 60).toString().split('.')
+          let mins = Number(minTot[0])
+          let secs = Number(minTot[1].slice(0, 2))
+          let final = `${mins}min ${secs}sec`
+          if (minTot[1] >= 60) final = `${mins + 1}min ${secs - 60}sec`
+          recordObj.time = final
           console.log(`your final time was ${tot} .seconds`)
           fs.writeFile(recordPath, JSON.stringify(recordObj), err => {
             if (err) console.log(err)
